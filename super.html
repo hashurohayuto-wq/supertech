@@ -175,63 +175,6 @@
             font-size: 13px;
             color: #94a3b8;
         }
-
-        /* Modal Popup */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 16px;
-        }
-
-        .modal-content {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 20px;
-            max-width: 440px;
-            width: 100%;
-            text-align: center;
-        }
-
-        .video-container {
-            margin: 16px 0;
-            border-radius: 10px;
-            overflow: hidden;
-            background: #000;
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 харьцаатай болгоно */
-            height: 0;
-        }
-
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .btn-close {
-            background: #334155;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 10px;
-            width: 100%;
-        }
-
-        .btn-close:hover {
-            background: #475569;
-        }
     </style>
 </head>
 <body>
@@ -308,7 +251,7 @@
 
             <div class="payment-box">
                 💳 <b>Төлбөр төлөх банк:</b> Мобифинанс<br>
-                <b>Данс:</b> MN12 0050 0991 0039 3442<br>
+                <b>Данс:</b> iban:MN12 0050 0991 0039 3442<br>
                 <b>Гүйлгээний утга:</b> Өөрийн утасны дугаарыг бичнэ үү.
             </div>
             <br>
@@ -318,36 +261,9 @@
     </div>
 </div>
 
-<!-- Захиалга амжилттай болсны дараа харагдах Попап Цонх -->
-<div id="successModal" class="modal-overlay">
-    <div class="modal-content">
-        <h3 style="color: #4ade80; font-size: 20px;">🎉 Захиалга амжилттай!</h3>
-        <p style="font-size: 13px; color: #9ca3af; margin-top: 6px;">Бид тантай удахгүй холбогдох болно.</p>
-        
-        <div style="margin-top: 15px; text-align: left; background: #0f1420; padding: 12px; border-radius: 8px; font-size: 13px;">
-            📌 <b>AnyDesk код олох заавар:</b>
-            <ol style="margin-left: 18px; margin-top: 6px; line-height: 1.5;">
-                <li>AnyDesk программыг нээнэ.</li>
-                <li>Дэлгэцэн дээрх 9 оронтой <b>"This Desk"</b> кодоо хуулна.</li>
-                <li>Манай операторт дугаараа өгнө үү.</li>
-            </ol>
-        </div>
-
-        <!-- YouTube бичлэг суулгах хэсэг -->
-        <div class="video-container">
-            <iframe id="tutorialVideo" src="" title="AnyDesk Instruction" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-
-        <button class="btn-close" onclick="closeModal()">Хаах</button>
-    </div>
-</div>
-
 <script>
     const TELEGRAM_BOT_TOKEN = '8395998510:AAF8mz_ywKqWTufXMkFgQ_kqNqlXjYhQXbA';
     const TELEGRAM_CHAT_ID = '8800644801';
-
-    // Энд өөрийн YouTube бичлэгийн линкийг оруулаарай (арын z3pA7E3f0z0 гэсэн ID-г солино)
-    const YOUTUBE_EMBED_URL = 'https://www.youtube.com/embed/z3pA7E3f0z0?autoplay=1';
 
     document.getElementById('orderForm').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -379,11 +295,8 @@
         .then(response => response.json())
         .then(data => {
             if(data.ok) {
+                alert('Амжилттай! Таны захиалгыг хүлээн авлаа. Бид тудахгүй холбогдох болно.');
                 document.getElementById('orderForm').reset();
-                
-                // Бичлэгийг зөвхөн цонх нээгдэх үед ачаална
-                document.getElementById('tutorialVideo').src = YOUTUBE_EMBED_URL;
-                document.getElementById('successModal').style.display = 'flex';
             } else {
                 alert('Алдаа гарлаа: ' + data.description);
             }
@@ -393,12 +306,6 @@
             console.error('Error:', error);
         });
     });
-
-    function closeModal() {
-        document.getElementById('successModal').style.display = 'none';
-        // Цонх хаагдахад бичлэгийг зогсооно
-        document.getElementById('tutorialVideo').src = '';
-    }
 </script>
 
 </body>
